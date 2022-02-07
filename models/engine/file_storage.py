@@ -73,7 +73,7 @@ class FileStorage:
             c = 0;
             for key, value in self.__objects.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
-                    c++
+                    c += 1
             return c
         else:
             return len(self.__objects)

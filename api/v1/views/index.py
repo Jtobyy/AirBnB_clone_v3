@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""""""
+"""
+Defines the status route
+"""
 
 from api.v1.views import app_views
 from flask import jsonify

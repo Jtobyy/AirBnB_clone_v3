@@ -68,21 +68,45 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        cls.db_instance = DBStorage()
+        cls.base1 = BaseModel()
+        cls.base2 = BaseModel()
+        cls.city1 = City()
+        cls.city2 = City()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
+        """Test that all returns a dictionary"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        self.assertEqual(len(models.storage.all()), db_storage.count())
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_all_with_class(self):
+        """Test that all returns required rows when a class is passed"""
+        self.assertEqual(len(models.storage.all(City)),
+                         len(db_storage.count(City)))
+        self.assertEqual(len(models.storage.all(BaseModel)),
+                         len(db_storage.count(BaseModel)))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        db_instance.new(base1)
+        self.assertEqual(self.db_instance.all()[0], self.base1)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to database"""
+        self.db_instance.save()
+        self.db_instance.remove()
+        self.db_instance.reload()
+        self.assertEqual(db_instance.all()[0], self.base1)

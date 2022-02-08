@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-default flask app
+Default flask app. Registers the app_views blueprint.
+Defines the teardown_appcontext which closes the database.
 """
 
 from flask import Flask

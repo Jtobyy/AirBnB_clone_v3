@@ -11,6 +11,7 @@ from flask import jsonify
 
 @app_views.route('/status')
 def status():
+    '''returns status of the api'''
     return jsonify(
         status="OK"
         )
@@ -18,6 +19,7 @@ def status():
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
+    '''returns stats of models'''
     return jsonify(
         amenities=storage.count("amenities"),
         cities=storage.count("cities"),

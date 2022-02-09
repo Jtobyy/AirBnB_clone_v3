@@ -8,23 +8,23 @@ from flask import make_response, jsonify, abort, request
 from models import storage
 
 
-@app_views.route('/users', methods=['GET'])
-def get_users():
-    storage.all("User")
+@app_views.route('/places', methods=['GET'])
+def get_places():
+    storage.all("Place")
 
 
-@app_views.route('/users/<user_id>', methods=['GET'])
-def get_user_by_id(user_id):
-    obj = storage.get("User", user_id)
+@app_views.route('/places/<place_id>', methods=['GET'])
+def get_place_by_id(place_id):
+    obj = storage.get("Place", place_id)
     if obj is not None:
         return obj.to_dict()
     else:
         abort(404)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'])
-def delete_user_by_id(user_id):
-    obj = storage.get("User", user_id)
+@app_views.route('/places/<place_id>', methods=['DELETE'])
+def delete_place_by_id(place_id):
+    obj = storage.get("Place", place_id)
     if obj is not None:
         storage.delete(obj)
         return make_response(jsonify({}), 200)
@@ -32,25 +32,25 @@ def delete_user_by_id(user_id):
         abort(404)
 
 
-@app_views.route('/users/', methods=['POST'])
-def send_user():
+@app_views.route('/places/', methods=['POST'])
+def send_place():
     request_data = request.get_json()
     try:
         json.loads(request_data)
     except ValueError:
         make_response("Not a JSON", 400)
-    user = request_data['name']
-    if user is None:
+    place = request_data['name']
+    if place is None:
         make_response("Missing name", 400)
     else:
-        obj = storage.new(user)
+        obj = storage.new(place)
         storage.save()
-        return make_response(user.to_dict(), 201)
+        return make_response(place.to_dict(), 201)
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'])
-def update_user_by_id(user_id):
-    obj = storage.get("User", user_id)
+@app_views.route('/places/<place_id>', methods=['PUT'])
+def update_place_by_id(place_id):
+    obj = storage.get("Place", place_id)
     try:
         json.loads(request_data)
     except ValueError:

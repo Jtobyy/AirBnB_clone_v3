@@ -10,7 +10,14 @@ from models import storage
 
 @app_views.route('/users', methods=['GET'])
 def get_users():
-    storage.all("User")
+    users = storage.all("User")
+    users = storage.all("City")
+    users_list = []
+    i = 0
+    for val in users:
+        users_list[i] = val.to_dict()
+        i += 1
+    return make_response(jsonify(users_list))
 
 
 @app_views.route('/users/<user_id>', methods=['GET'])

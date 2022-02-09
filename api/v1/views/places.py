@@ -10,7 +10,14 @@ from models import storage
 
 @app_views.route('/places', methods=['GET'])
 def get_places():
-    storage.all("Place")
+    places = storage.all("Place")
+    places_list = []
+    i = 0
+    for val in places:
+        places_list[i] = val.to_dict()
+        i += 1
+    return make_response(jsonify(places_list))
+
 
 
 @app_views.route('/places/<place_id>', methods=['GET'])

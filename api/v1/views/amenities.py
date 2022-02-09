@@ -10,7 +10,13 @@ from models import storage
 
 @app_views.route('/amenities', methods=['GET'])
 def get_amenities():
-    storage.all("Amenity")
+    amenities = storage.all("Amenity")
+    amenities_list = []
+    i = 0
+    for val in amenities:
+        amenities_list[i] = val.to_dict()
+        i += 1
+    return make_response(jsonify(amenities_list))
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])

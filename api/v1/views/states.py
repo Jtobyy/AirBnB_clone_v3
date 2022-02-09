@@ -10,7 +10,13 @@ from models import storage
 
 @app_views.route('/states', methods=['GET'])
 def get_states():
-    storage.all("State")
+    states = storage.all("State")
+    states_list = []
+    i = 0
+    for val in states:
+        states_list[i] = val.to_dict()
+        i += 1
+    return make_response(jsonify(states_list))
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])

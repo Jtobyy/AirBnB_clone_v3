@@ -10,7 +10,13 @@ from models import storage
 
 @app_views.route('/reviews', methods=['GET'])
 def get_reviews():
-    storage.all("Review")
+    reviews = storage.all("Review")
+    reviews_list = []
+    i = 0
+    for val in reviews:
+        reviews_list[i] = val.to_dict()
+        i += 1
+    return make_response(jsonify(reviews_list))
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'])

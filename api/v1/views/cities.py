@@ -8,9 +8,15 @@ from flask import make_response, jsonify, abort, request
 from models import storage
 
 
-@app_views.route('/citys', methods=['GET'])
+@app_views.route('/cities', methods=['GET'])
 def get_citys():
-    storage.all("City")
+    cities = storage.all("City")
+    cities_list = []
+    i = 0
+    for val in cities:
+        cities_list[i] = val.to_dict()
+        i += 1
+    return make_response(jsonify(cities_list))
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])

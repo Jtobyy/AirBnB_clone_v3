@@ -4,7 +4,7 @@ Default flask app. Registers the app_views blueprint.
 Defines the teardown_appcontext which closes the database.
 """
 
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -14,8 +14,13 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(e):
     storage.close()
+
+
+@app.errorhandler(404)
+def handler_response(error):
+    return make_response(jsonify(error="Not found"), 404)
 
 
 if __name__ == "__main__":

@@ -16,9 +16,9 @@ app.register_blueprint(app_views)
 def teardown():
     storage.close()
 
-if __name == "__main__":
+if __name__ == "__main__":
     if getenv("HBNB_API_HOST") != None or getenv("HBNB_API_HOST") != "":
         app.config['HBNB_API_HOST'] = '0.0.0.0'
-    if getenv("HBNB_API_PORT") != None or getenv("HBNB_API_PORT") != "":        
+    if getenv("HBNB_API_PORT") != None or getenv("HBNB_API_PORT") != "": 
         app.config['HBNB_API_PORT'] = "5000"
     app.run(threaded=True)

@@ -8,12 +8,12 @@ from flask import make_response, jsonify, abort, request
 from models import storage
 
 
-@app_views.route('/amenitys', methods=['GET'])
-def get_amenitys():
+@app_views.route('/amenities', methods=['GET'])
+def get_amenities():
     storage.all("Amenity")
 
 
-@app_views.route('/amenitys/<amenity_id>', methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def get_amenity_by_id(amenity_id):
     obj = storage.get("Amenity", amenity_id)
     if obj is not None:
@@ -32,7 +32,7 @@ def delete_amenity_by_id(amenity_id):
         abort(404)
 
 
-@app_views.route('/amenitys/', methods=['POST'])
+@app_views.route('/amenities/', methods=['POST'])
 def send_amenity():
     request_data = request.get_json()
     try:
@@ -48,7 +48,7 @@ def send_amenity():
         return make_response(amenity.to_dict(), 201)
 
 
-@app_views.route('/amenitys/<amenity_id>', methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity_by_id(amenity_id):
     obj = storage.get("Amenity", amenity_id)
     try:

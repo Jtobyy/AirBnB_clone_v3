@@ -8,23 +8,23 @@ from flask import make_response, jsonify, abort, request
 from models import storage
 
 
-@app_views.route('/states', methods=['GET'])
-def get_states():
-    storage.all("State")
+@app_views.route('/citys', methods=['GET'])
+def get_citys():
+    storage.all("City")
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
-def get_state_by_id(state_id):
-    obj = storage.get("State", state_id)
+@app_views.route('/cities/<city_id>', methods=['GET'])
+def get_city_by_id(city_id):
+    obj = storage.get("City", city_id)
     if obj is not None:
         return obj.to_dict()
     else:
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
-def delete_state_by_id(state_id):
-    obj = storage.get("State", state_id)
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
+def delete_city_by_id(city_id):
+    obj = storage.get("City", city_id)
     if obj is not None:
         storage.delete(obj)
         return make_response(jsonify({}), 200)
@@ -32,25 +32,25 @@ def delete_state_by_id(state_id):
         abort(404)
 
 
-@app_views.route('/states/', methods=['POST'])
-def send_state():
+@app_views.route('/cities/', methods=['POST'])
+def send_city():
     request_data = request.get_json()
     try:
         json.loads(request_data)
     except ValueError:
         make_response("Not a JSON", 400)
-    state = request_data['name']
-    if state is None:
+    city = request_data['name']
+    if city is None:
         make_response("Missing name", 400)
     else:
-        obj = storage.new(state)
+        obj = storage.new(city)
         storage.save()
-        return make_response(state.to_dict(), 201)
+        return make_response(city.to_dict(), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
-def update_state_by_id(state_id):
-    obj = storage.get("State", state_id)
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def update_city_by_id(city_id):
+    obj = storage.get("City", city_id)
     try:
         json.loads(request_data)
     except ValueError:

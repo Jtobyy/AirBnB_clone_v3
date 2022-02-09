@@ -19,8 +19,8 @@ def teardown():
 
 
 if __name__ == "__main__":
-    if getenv("HBNB_API_HOST") is not None or getenv("HBNB_API_HOST") != "":
+    if getenv("HBNB_API_HOST") is None or getenv("HBNB_API_HOST") == "":
         app.config['HBNB_API_HOST'] = '0.0.0.0'
-    if getenv("HBNB_API_PORT") is not None or getenv("HBNB_API_PORT") != "":
+    if getenv("HBNB_API_PORT") is None or getenv("HBNB_API_PORT") == "":
         app.config['HBNB_API_PORT'] = "5000"
     app.run(threaded=True)

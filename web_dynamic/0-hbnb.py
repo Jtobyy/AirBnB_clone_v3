@@ -6,6 +6,7 @@ starts a Flask web application
 from flask import Flask, render_template
 from models import *
 from models import storage
+import uuid
 app = Flask(__name__)
 
 
@@ -15,7 +16,7 @@ def filters():
     states = storage.all("State").values()
     amenities = storage.all("Amenity").values()
     return render_template('10-hbnb_filters.html', states=states,
-                           amenities=amenities)
+                           amenities=amenities, cache_id=uuid.uuid4())
 
 
 @app.teardown_appcontext
